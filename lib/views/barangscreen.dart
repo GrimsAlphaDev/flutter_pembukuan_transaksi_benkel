@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pembukuan_transaksi_benkel/models/product.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/providers/barang_provider.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/views/components/header.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/views/constant/constant.dart';
@@ -21,6 +22,24 @@ class _BarangScreenState extends State<BarangScreen> {
     });
   }
 
+  ondispose() {
+    namaBarangController.dispose();
+    merekController.dispose();
+    kategoriBarangController.dispose();
+    deskripsiBarangController.dispose();
+    hargaBarangController.dispose();
+    stokBarangController.dispose();
+    super.dispose();
+  }
+
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController namaBarangController = TextEditingController();
+  TextEditingController merekController = TextEditingController();
+  TextEditingController kategoriBarangController = TextEditingController();
+  TextEditingController deskripsiBarangController = TextEditingController();
+  TextEditingController hargaBarangController = TextEditingController();
+  TextEditingController stokBarangController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,12 +49,200 @@ class _BarangScreenState extends State<BarangScreen> {
         child: Column(
           children: [
             const Header(),
-            const SizedBox(height: defaultPadding),
+            const SizedBox(height: 40),
             Text(
-              "Table Barang Stok",
+              "Table Barang",
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                // tambah product button
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // open bottom sheet
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            child: SingleChildScrollView(
+                              child: Form(
+                                key: formKey,
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "Tambah Barang",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      controller: namaBarangController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Nama Barang",
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Nama Barang tidak boleh kosong";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      controller: merekController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Merek",
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Merek tidak boleh kosong";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      controller: kategoriBarangController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Kategori Barang",
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Kategori Barang tidak boleh kosong";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      controller: deskripsiBarangController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Deskripsi Barang",
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Deskripsi Barang tidak boleh kosong";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      controller: hargaBarangController,
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Harga Barang",
+                                      ),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    TextFormField(
+                                      controller: stokBarangController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "Stok Barang",
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Stok Barang tidak boleh kosong";
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                    const SizedBox(height: 20),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        if (formKey.currentState!.validate()) {
+                                          // print(namaBarangController.text);
+                                          // print(merekController.text);
+                                          // print(kategoriBarangController.text);
+                                          // print(deskripsiBarangController.text);
+                                          // print(hargaBarangController.text);
+                                          // print(stokBarangController.text);
+                                          context
+                                              .read<BarangProvider>()
+                                              .createBarang(
+                                                  barang: Product(
+                                                created_at:
+                                                    DateTime.now().toString(),
+                                                updated_at:
+                                                    DateTime.now().toString(),
+                                                nama_barang:
+                                                    namaBarangController.text,
+                                                deskripsi_barang:
+                                                    deskripsiBarangController
+                                                        .text,
+                                                harga_barang: int.parse(
+                                                    hargaBarangController.text),
+                                                kategori_barang:
+                                                    kategoriBarangController
+                                                        .text,
+                                                merek: merekController.text,
+                                                stok_barang: int.parse(
+                                                    stokBarangController.text),
+                                              ))
+                                              .then((value) {
+                                            if (value) {
+                                              namaBarangController.clear();
+                                              merekController.clear();
+                                              kategoriBarangController.clear();
+                                              deskripsiBarangController.clear();
+                                              hargaBarangController.clear();
+                                              stokBarangController.clear();
+                                              Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Berhasil menambahkan barang'),
+                                                ),
+                                              );
+                                            } else {
+                                              Navigator.pop(context);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                  content: Text(
+                                                      'Gagal menambahkan barang'),
+                                                ),
+                                              );
+                                            }
+                                          });
+                                        }
+                                      },
+                                      style: ButtonStyle(
+                                        padding: MaterialStateProperty.all(
+                                          const EdgeInsets.all(20),
+                                        ),
+                                      ),
+                                      child: const Text("Tambah Barang"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text("Tambah Barang"),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.all(15),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

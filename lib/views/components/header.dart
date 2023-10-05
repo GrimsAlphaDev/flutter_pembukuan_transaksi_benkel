@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pembukuan_transaksi_benkel/providers/barang_provider.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/providers/logout_provider.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/providers/main_screen_provider.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/providers/menu_app_provider.dart';
@@ -35,9 +36,9 @@ class Header extends StatelessWidget {
           ),
         if (!Responsive.isMobile(context))
           Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        // const Expanded(child: SearchField()),
+        // const Expanded(child: SearchFieldProduct()),
         (context.read<MainScreenProvider>().selectedIndex == 1)
-            ? const Expanded(child: SearchField())
+            ? const Expanded(child: SearchFieldProduct())
             : const SizedBox(),
         const SizedBox(width: defaultPadding),
         const ProfileCard()
@@ -133,35 +134,45 @@ class ProfileCard extends StatelessWidget {
   }
 }
 
-class SearchField extends StatelessWidget {
-  const SearchField({
+class SearchFieldProduct extends StatefulWidget {
+  const SearchFieldProduct({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<SearchFieldProduct> createState() => _SearchFieldProductState();
+}
+
+class _SearchFieldProductState extends State<SearchFieldProduct> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: "Search",
         fillColor: secondaryColor,
         filled: true,
-        border: const OutlineInputBorder(
+        border: OutlineInputBorder(
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        suffixIcon: InkWell(
-          onTap: () {},
-          child: Container(
-            padding: const EdgeInsets.all(defaultPadding * 0.75),
-            margin: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-            decoration: const BoxDecoration(
-              color: primaryColor,
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            child: SvgPicture.asset("assets/icons/Search.svg"),
-          ),
-        ),
+        // suffixIcon: InkWell(
+        //   onTap: () {},
+        //   child: Container(
+        //     padding: const EdgeInsets.all(defaultPadding * 0.75),
+        //     margin: const EdgeInsets.symmetric(horizontal: defaultPadding / 2),
+        //     decoration: const BoxDecoration(
+        //       color: primaryColor,
+        //       borderRadius: BorderRadius.all(Radius.circular(10)),
+        //     ),
+        //     child: SvgPicture.asset("assets/icons/Search.svg"),
+        //   ),
+        // ),
       ),
+      onChanged: (value) {
+        context.read<BarangProvider>().searchBarang(value);
+      },
     );
   }
 }

@@ -4,5 +4,6 @@ class Endpoint {
   static const String login = 'api/login';
   static const String logout = 'api/logout';
   static const String getUser = 'api/user';
+  static const String filterProduct = 'api/product/search';
   
 }
