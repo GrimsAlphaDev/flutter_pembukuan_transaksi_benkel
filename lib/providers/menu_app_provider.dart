@@ -6,7 +6,8 @@ class MenuAppProvider extends ChangeNotifier {
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
   void controlMenu() {
-    if (!_scaffoldKey.currentState!.isDrawerOpen) {
+    if (_scaffoldKey.currentState != null &&
+        !_scaffoldKey.currentState!.isDrawerOpen) {
       _scaffoldKey.currentState!.openDrawer();
     }
   }

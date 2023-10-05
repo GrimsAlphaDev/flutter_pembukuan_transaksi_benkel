@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/views/components/header.dart';
-import 'package:flutter_pembukuan_transaksi_benkel/views/components/responsive.dart';
 import 'package:flutter_pembukuan_transaksi_benkel/views/constant/constant.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -19,32 +18,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            Header(),
-            SizedBox(height: defaultPadding),
+            const Header(),
+            const SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   flex: 5,
-                  child: Column(
-                    children: [
-                      // MyFiles(),
-                      SizedBox(height: defaultPadding),
-                      // RecentFiles(),
-                      // if (Responsive.isMobile(context))
-                      //   SizedBox(height: defaultPadding),
-                      // if (Responsive.isMobile(context)) StorageDetails(),
-                    ],
-                  ),
+                  child: Column(children: const [
+                    SizedBox(height: defaultPadding),
+                    Placeholder(),
+                    SizedBox(height: defaultPadding),
+                    Placeholder(),
+                    SizedBox(height: defaultPadding),
+                    Placeholder(),
+                    SizedBox(height: defaultPadding),
+                    Placeholder(),
+                    SizedBox(height: defaultPadding),
+                    Placeholder(),
+                  ]),
                 ),
-                if (!Responsive.isMobile(context))
-                  const SizedBox(width: defaultPadding),
-                // On Mobile means if the screen is less than 850 we don't want to show it
-                // if (!Responsive.isMobile(context))
-                // Expanded(
-                //   flex: 2,
-                //   child: StorageDetails(),
-                // )
               ],
             )
           ],
