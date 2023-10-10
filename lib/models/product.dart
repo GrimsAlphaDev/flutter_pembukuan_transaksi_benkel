@@ -1,4 +1,5 @@
 class Product {
+  final int? id;
   // ignore: non_constant_identifier_names
   final String nama_barang;
   final String merek;
@@ -16,6 +17,7 @@ class Product {
   final String updated_at;
 
   Product({
+    this.id,
     // ignore: non_constant_identifier_names
     required this.nama_barang,
     required this.merek,
@@ -35,6 +37,7 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
+      id: json['id'],
       nama_barang: json['nama_barang'],
       merek: json['merek'],
       harga_barang: json['harga_barang'],
@@ -48,6 +51,7 @@ class Product {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'nama_barang': nama_barang,
       'merek': merek,
       'harga_barang': harga_barang,

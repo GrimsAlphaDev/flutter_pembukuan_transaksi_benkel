@@ -68,7 +68,44 @@ class BarangService extends InterceptorApi {
           'Authorization': 'Bearer $token',
         }),
       );
-      
+
+      return response.data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Map<String, dynamic>> editBarang(
+      {required Product barang, required String token}) async {
+    try {
+      String url = '${Endpoint.baseUrl}${Endpoint.products}/${barang.id}';
+
+      final Response response = await dio.put(
+        url,
+        data: barang.toJson(),
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+        }),
+      );
+
+      return response.data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<Map<String, dynamic>> deleteBarang(
+      {required int id, required String token}) async {
+    try {
+      String url = '${Endpoint.baseUrl}${Endpoint.products}/$id';
+
+      final Response response = await dio.delete(
+        url,
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+        }),
+      );
+
       return response.data;
     } catch (e) {
       throw Exception(e);

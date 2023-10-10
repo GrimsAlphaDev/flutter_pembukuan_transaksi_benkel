@@ -31,7 +31,7 @@ class SideMenu extends StatelessWidget {
             const SizedBox(height: 5),
             DrawerListTile(
               title: "Barang",
-              svgSrc: "assets/icons/menu_tran.svg",
+              svgSrc: "assets/icons/drop_box.svg",
               press: () {
                 context.read<MainScreenProvider>().onItemTapped(1);
               },

@@ -31,7 +31,8 @@ class InterceptorApi {
                     borderRadius: BorderRadius.circular(3),
                     side: const BorderSide(color: Colors.grey, width: .5),
                   ),
-                  title: const Icon(Icons.sms_failed, color: Colors.red, size: 50),
+                  title:
+                      const Icon(Icons.sms_failed, color: Colors.red, size: 50),
                   content: const Text(
                     'Session Expired',
                     textAlign: TextAlign.center,
@@ -82,7 +83,8 @@ class InterceptorApi {
                     borderRadius: BorderRadius.circular(3),
                     side: const BorderSide(color: Colors.grey, width: .5),
                   ),
-                  title: const Icon(Icons.sms_failed, color: Colors.red, size: 50),
+                  title:
+                      const Icon(Icons.sms_failed, color: Colors.red, size: 50),
                   content: Text(
                     messageError,
                     textAlign: TextAlign.center,

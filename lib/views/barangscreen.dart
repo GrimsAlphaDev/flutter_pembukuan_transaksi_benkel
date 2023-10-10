@@ -29,9 +29,16 @@ class _BarangScreenState extends State<BarangScreen> {
     deskripsiBarangController.dispose();
     hargaBarangController.dispose();
     stokBarangController.dispose();
+    editNamaBarangController.dispose();
+    editMerekController.dispose();
+    editKategoriBarangController.dispose();
+    editDeskripsiBarangController.dispose();
+    editHargaBarangController.dispose();
+    editStokBarangController.dispose();
     super.dispose();
   }
 
+  // Create
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   TextEditingController namaBarangController = TextEditingController();
   TextEditingController merekController = TextEditingController();
@@ -39,6 +46,15 @@ class _BarangScreenState extends State<BarangScreen> {
   TextEditingController deskripsiBarangController = TextEditingController();
   TextEditingController hargaBarangController = TextEditingController();
   TextEditingController stokBarangController = TextEditingController();
+
+  // Edit
+  GlobalKey<FormState> editFormKey = GlobalKey<FormState>();
+  TextEditingController editNamaBarangController = TextEditingController();
+  TextEditingController editMerekController = TextEditingController();
+  TextEditingController editKategoriBarangController = TextEditingController();
+  TextEditingController editDeskripsiBarangController = TextEditingController();
+  TextEditingController editHargaBarangController = TextEditingController();
+  TextEditingController editStokBarangController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -142,6 +158,12 @@ class _BarangScreenState extends State<BarangScreen> {
                                         border: OutlineInputBorder(),
                                         labelText: "Harga Barang",
                                       ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return "Harga Barang tidak boleh kosong";
+                                        }
+                                        return null;
+                                      },
                                     ),
                                     const SizedBox(height: 20),
                                     TextFormField(
@@ -308,11 +330,334 @@ class _BarangScreenState extends State<BarangScreen> {
                                     children: [
                                       IconButton(
                                         icon: const Icon(Icons.edit),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          editNamaBarangController.text = barang
+                                              .barangResponse[i].nama_barang;
+                                          editMerekController.text =
+                                              barang.barangResponse[i].merek;
+                                          editKategoriBarangController.text =
+                                              barang.barangResponse[i]
+                                                  .kategori_barang;
+                                          editDeskripsiBarangController.text =
+                                              barang.barangResponse[i]
+                                                  .deskripsi_barang;
+                                          editHargaBarangController.text =
+                                              barang.barangResponse[i]
+                                                  .harga_barang
+                                                  .toString();
+                                          editStokBarangController.text = barang
+                                              .barangResponse[i].stok_barang
+                                              .toString();
+                                          showModalBottomSheet(
+                                              context: context,
+                                              builder: (context) {
+                                                return Container(
+                                                  padding: const EdgeInsets.all(
+                                                      defaultPadding),
+                                                  child: SingleChildScrollView(
+                                                    child: Form(
+                                                      key: editFormKey,
+                                                      child: Column(
+                                                        children: [
+                                                          const Text(
+                                                            "Edit Barang",
+                                                            style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+
+                                                          // nama barang
+                                                          TextFormField(
+                                                            controller:
+                                                                editNamaBarangController,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  "Nama Barang",
+                                                            ),
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return "Nama Barang tidak boleh kosong";
+                                                              }
+                                                              return null;
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          TextFormField(
+                                                            controller:
+                                                                editMerekController,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  "Merek",
+                                                            ),
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return "Merek tidak boleh kosong";
+                                                              }
+                                                              return null;
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          TextFormField(
+                                                            controller:
+                                                                editKategoriBarangController,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  "Kategori Barang",
+                                                            ),
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return "Kategori Barang tidak boleh kosong";
+                                                              }
+                                                              return null;
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          TextFormField(
+                                                            controller:
+                                                                editDeskripsiBarangController,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  "Deskripsi Barang",
+                                                            ),
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return "Deskripsi Barang tidak boleh kosong";
+                                                              }
+                                                              return null;
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          TextFormField(
+                                                            controller:
+                                                                editHargaBarangController,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .number,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  "Harga Barang",
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          TextFormField(
+                                                            controller:
+                                                                editStokBarangController,
+                                                            decoration:
+                                                                const InputDecoration(
+                                                              border:
+                                                                  OutlineInputBorder(),
+                                                              labelText:
+                                                                  "Stok Barang",
+                                                            ),
+                                                            validator: (value) {
+                                                              if (value ==
+                                                                      null ||
+                                                                  value
+                                                                      .isEmpty) {
+                                                                return "Stok Barang tidak boleh kosong";
+                                                              }
+                                                              return null;
+                                                            },
+                                                          ),
+                                                          const SizedBox(
+                                                              height: 20),
+                                                          ElevatedButton(
+                                                            onPressed: () {
+                                                              if (editFormKey
+                                                                  .currentState!
+                                                                  .validate()) {
+                                                                context
+                                                                    .read<
+                                                                        BarangProvider>()
+                                                                    .editBarang(
+                                                                        barang:
+                                                                            Product(
+                                                                      id: barang
+                                                                          .barangResponse[
+                                                                              i]
+                                                                          .id,
+                                                                      created_at: barang
+                                                                          .barangResponse[
+                                                                              i]
+                                                                          .created_at,
+                                                                      updated_at:
+                                                                          DateTime.now()
+                                                                              .toString(),
+                                                                      nama_barang:
+                                                                          editNamaBarangController
+                                                                              .text,
+                                                                      deskripsi_barang:
+                                                                          editDeskripsiBarangController
+                                                                              .text,
+                                                                      harga_barang:
+                                                                          int.parse(
+                                                                              editHargaBarangController.text),
+                                                                      kategori_barang:
+                                                                          editKategoriBarangController
+                                                                              .text,
+                                                                      merek: editMerekController
+                                                                          .text,
+                                                                      stok_barang:
+                                                                          int.parse(
+                                                                              editStokBarangController.text),
+                                                                    ))
+                                                                    .then(
+                                                                        (value) {
+                                                                  if (value) {
+                                                                    editNamaBarangController
+                                                                        .clear();
+                                                                    editMerekController
+                                                                        .clear();
+                                                                    editKategoriBarangController
+                                                                        .clear();
+                                                                    editDeskripsiBarangController
+                                                                        .clear();
+                                                                    editHargaBarangController
+                                                                        .clear();
+                                                                    editStokBarangController
+                                                                        .clear();
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    ScaffoldMessenger.of(
+                                                                            context)
+                                                                        .showSnackBar(
+                                                                      const SnackBar(
+                                                                        content:
+                                                                            Text('Berhasil mengedit barang'),
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                    ScaffoldMessenger.of(
+                                                                            context)
+                                                                        .showSnackBar(
+                                                                      const SnackBar(
+                                                                        content:
+                                                                            Text('Gagal mengedit barang'),
+                                                                      ),
+                                                                    );
+                                                                  }
+                                                                });
+                                                              }
+                                                            },
+                                                            style: ButtonStyle(
+                                                              padding:
+                                                                  MaterialStateProperty
+                                                                      .all(
+                                                                const EdgeInsets
+                                                                    .all(20),
+                                                              ),
+                                                            ),
+                                                            child: const Text(
+                                                                "Edit Barang"),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                        },
                                       ),
                                       IconButton(
                                         icon: const Icon(Icons.delete),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: const Text("Hapus"),
+                                                content: const Text(
+                                                    "Are you sure want to delete this item?"),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: const Text("Cancel"),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      context
+                                                          .read<
+                                                              BarangProvider>()
+                                                          .deleteBarang(
+                                                              id: barang
+                                                                      .barangResponse[
+                                                                          i]
+                                                                      .id ??
+                                                                  0)
+                                                          .then((value) {
+                                                        if (value) {
+                                                          Navigator.pop(
+                                                              context);
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              content: Text(
+                                                                  'Berhasil menghapus barang'),
+                                                            ),
+                                                          );
+                                                        } else {
+                                                          Navigator.pop(
+                                                              context);
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                              content: Text(
+                                                                  'Gagal menghapus barang'),
+                                                            ),
+                                                          );
+                                                        }
+                                                      });
+                                                    },
+                                                    child: const Text("Hapus"),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
                                       ),
                                     ],
                                   )),
